@@ -1,0 +1,61 @@
+security:
+    # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
+    providers:
+        our_db_provider:
+            entity:
+                class: App\Entity\User
+                # the property to query by - e.g. username, email, etc
+                property: email
+                # if you're using multiple entity managers
+                # manager_name: customer
+    firewalls:
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+        main:
+            anonymous: true
+            guard:
+                authenticators:
+                    - App\Security\LoginFormAuthenticator
+            logout:
+                path:   app_logout
+                target: app_login
+            access_denied_handler: App\Security\AccessDeniedHandler
+
+            # activate different ways to authenticate
+
+            # http_basic: true
+            # https://symfony.com/doc/current/security.html#a-configuring-how-your-users-will-authenticate
+
+            # form_login: true
+            # https://symfony.com/doc/current/security/form_login_setup.html
+
+    # Easy way to control access for large sections of your site
+    # Note: Only the *first* access control that matches will be used
+    role_hierarchy:
+        ROLE_SUPERADMIN:    ROLE_ADMIN
+        ROLE_ADMIN:         ROLE_USER
+    access_control:
+        - { path: ^/$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/home, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/contact, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/register, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/logout, roles: ROLE_USER }
+        - { path: ^/profile, roles: ROLE_USER }
+        - { path: ^/location/user, roles: ROLE_USER }
+        - { path: ^/location, roles: ROLE_USER }
+        - { path: ^/contrat/vehicule, roles: ROLE_USER }
+        - { path: ^/facture/pdf, roles: ROLE_USER }
+        - { path: ^/facture/pdftest, roles: ROLE_USER }
+        - { path: /user, roles: ROLE_ADMIN }
+        - { path: /type/vehicule, roles: ROLE_ADMIN }
+        - { path: /vehicule, roles: ROLE_ADMIN }
+        - { path: /contrat, roles: ROLE_ADMIN }
+        - { path: /ville, roles: ROLE_ADMIN }
+        - { path: /facture, roles: ROLE_ADMIN }
+        - { path: /*, roles: ROLE_SUPERADMIN }
+    encoders:
+        App\Entity\User:
+            algorithm: bcrypt
+            cost: 12

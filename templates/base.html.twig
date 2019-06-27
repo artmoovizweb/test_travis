@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>{% block title %}Lib2Move{% endblock %}</title>
+        {% block stylesheets %}
+            <link href="https://fonts.googleapis.com/css?family=Lato|ZCOOL+KuaiLe" rel="stylesheet">
+            <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+            
+            <!-- <script type="text/javascript" src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script> -->
+            {{ encore_entry_link_tags('app') }}
+            {{ encore_entry_script_tags('app') }}
+        {% endblock %}
+    </head>
+    <body>
+        <div id="navbar" class="">
+            {% include('navs/main-navbar.html.twig') %}
+        </div>
+        <!-- carousel -->
+        <div class="" style="margin-top:80px;">
+            <div class="flashes">
+                {% for label, messages in app.flashes %}
+                    {% set index = loop.index %}
+                    {% for message in messages %}
+                        <div class="flash flash-{{ label }}" style="top:{{ 0.5 + 4*index }}rem">
+                            <strong>{{ message }}</strong>
+                        </div>
+                    {% endfor %}
+                {% endfor %}
+            </div>
+
+            {% block body %}
+
+            {% endblock %}
+        
+        </div>
+    
+
+        <!-- Footer -->
+	<footer class="footer">
+		<div class="container">
+			<div class="row text-center text-xs-center text-sm-left text-md-left">
+				<div class="col-xs-12 col-sm-4 col-md-4">
+					<h6>Plan du site</h6>
+					<ul class="list-unstyled quick-links">
+						<li><a href="#">Accueil</a></li>
+						<li><a href="#">A propos</a></li>
+					</ul>
+				</div>
+				<div class="col-xs-12 col-sm-4 col-md-4">
+					<h6>Informations</h6>
+					<ul class="list-unstyled quick-links">
+						<li><a href="#">Condition de vente</a></li>
+						<li><a href="#">FAQ</a></li>
+					</ul>
+				</div>
+				<div class="col-xs-12 col-sm-4 col-md-4">
+					<h6>Nous joindre</h6>
+					<ul class="list-unstyled quick-links">
+						<li><a href="#">Contact</a></li>
+					</ul>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xs-12 col-sm-12 col-md-12 mt-2 mt-sm-5">
+					<ul class="list-unstyled list-inline social text-center">
+						<li class="list-inline-item"><a href="#"><i class="fab fa-facebook-f"></i></a></li>
+						<li class="list-inline-item"><a href="#"><i class="fab fa-twitter"></i></a></li>
+				    <li class="list-inline-item"><a href="#"><i class="fab fa-instagram"></i></a></li>
+        </ul>
+				</div>
+			</div>	
+			<div class="row">
+				<div class="col-xs-12 col-sm-12 col-md-12 mt-2 mt-sm-2 text-center">
+					<p class="h6">&copy; 2019 Lib2Move</p>
+          <blockquote class="blockquote">
+                    <p class="blockquote-footer">Paris | Lyon</p>
+                </blockquote>
+				</div>
+			</div>	
+		</div>
+	<!-- ./Footer -->
+
+    <style type="text/css">
+        footer a {
+            color: #cebaf2;
+        }
+        .bread a {
+            color: #856ab7;
+        }
+
+    </style>
+
+        {% block javascripts %}
+            {{ encore_entry_script_tags('app-bottom') }}
+            <!-- <script>
+              let myLatLng = {lat: parseFloat($('#lat').attr('data')), lng: parseFloat($('#lon').attr('data'))};
+
+              function initMap() {
+                let map = new google.maps.Map(document.getElementById('map'), {
+                  center: myLatLng,
+                  zoom: 18,
+                  // mapTypeId: 'hybrid'
+                });
+                map.setTilt(45);
+
+                var marker = new google.maps.Marker({
+                  position: myLatLng,
+                  map: map,
+                  title: 'Emplacement véhicule'
+                });
+              }
+            </script>
+             <script async defer src="https://maps.googleapis.com/maps/api/js?key=(code)&callback=initMap"></script>  -->
+        {% endblock %}
+    </body>
+</html>

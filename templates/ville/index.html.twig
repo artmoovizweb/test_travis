@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ville index{% endblock %}
+
+{% block body %}
+    <h1 class="mb-5">Ville index</h1>
+
+    <div class="container">
+
+    <table id="datatable" class="table table-striped table-hover table-responsive cell-border">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th style="width: 9%;">Image</th>
+                <th>Name</th>
+                <th>ZIP</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for ville in villes %}
+            <tr>
+                <td>{{ ville.id }}</td>
+                <td>
+                    {% if ville.image %}
+                        <img src="/assets/uploads/ville/{{ ville.image }}" class="img-fluid rounded-circle" />
+                    {% else %}
+                        <img src="/assets/img/ville.png" class="img-fluid rounded-circle" />
+                    {% endif %}
+                </td>
+                <td>{{ ville.name }}</td>
+                <td>{{ ville.ZIP }}</td>
+                <td>
+                    <a href="{{ path('ville_show', {'id': ville.id}) }}">Show</a>
+                    <a> | </a>
+                    <a href="{{ path('ville_edit', {'id': ville.id}) }}">Edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('ville_new') }}">Create new</a>
+
+    </div>
+{% endblock %}

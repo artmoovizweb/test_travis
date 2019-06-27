@@ -1,0 +1,151 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Location{% endblock %}
+
+{% block body %}
+
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="/">Home</a></li>
+      <li class="breadcrumb-item active font-weight-bold" aria-current="page">Contrat</li>
+      <li class="breadcrumb-item text-muted">Paiement</li>
+      <li class="breadcrumb-item text-muted">Confirmation</li>
+    </ol>
+  </nav>
+
+   <h1 class="m-3">Contrat</h1>
+
+<div class="container">
+  <div class="row">
+    <div class="col-12">
+      <div class="card-columns">
+        {% for contrat in contrats %}
+          <div class="card border-light mb-3 card-contrat" data="{{ contrat.id }}">
+            <div class="card-header bg-secondary text-white">
+              <strong>{{ contrat.name|upper }}</strong>
+              <span class="float-right">{{ contrat.price }} €</span>
+            </div>
+            <div class="card-body">
+              <table class="table table-hover">
+                <tr>
+                    <th>Kilomètres maximum</th>
+                    <td>{{ contrat.maxKm }} km</td>
+                </tr>
+                <tr>
+                    <th>Durée maximale</th>
+                    <td>{{ contrat.maxTime ? contrat.maxTime|date('H:i') : '' }}</td>
+                </tr>
+              </table>
+              
+              <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-{{ contrat.id }}">Détails</button>
+            </div>
+          </div>
+
+
+          <!-- Modal -->
+          <div class="modal fade" id="modal-{{ contrat.id }}" tabindex="-1" role="dialog" aria-labelledby="modal-{{ contrat.id }}Label" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="modal-{{ contrat.id }}Label"><strong>{{ contrat.name|upper }}</strong></h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <h2 class="mb-3"><i class="fas fa-dollar-sign"></i> {{ contrat.price }} €</h2>
+                  <table class="table table-hover mb-3">
+                    <tr>
+                        <th><i class="fas fa-directions"></i> Kilomètres maximum</th>
+                        <td>{{ contrat.maxKm }} km</td>
+                    </tr>
+                    <tr>
+                        <th><i class="fas fa-clock"></i> Durée maximale</th>
+                        <td>{{ contrat.maxTime ? contrat.maxTime|date('H:i') : '' }}</td>
+                    </tr>
+                  </table>
+
+                  <p class="text-justify">Chaque kilomètre au-delà du nombre maximum autorisé sera facturé {{ contrat.kmPenalty }} €</p>
+                  <p class="text-justify">Chaque minute au-delà de la durée maximale autorisée sera facturée {{ contrat.timePenalty }} €</p>
+                </div>
+                <div class="modal-footer">
+                  <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  <button type="button" class="btn btn-primary">Save changes</button> -->
+                </div>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+
+  {% if promo is defined and promo == true %}
+    {{ include('location/_form.html.twig', {'button_label': 'Poursuivre profiter de vos -5% de reduction'}) }}
+  {% else %}
+    {{ include('location/_form.html.twig', {'button_label': 'Poursuivre'}) }}
+  {% endif %}
+
+  <h2 class="m-3 mt-5">Véhicule</h2>
+
+  <div class="row shadow-lg">
+    <div class="col-3 p-0">
+      <img src="{{ vehicule.image }}" class="img-fluid rounded">
+    </div>
+    <div class="col-5">
+      <table class="table table-hover">
+          <tr>
+              <th>Brand & Serie</th>
+              <td>{{ vehicule.brand|capitalize }} {{ vehicule.serie|capitalize }}</td>
+          </tr>
+          <tr>
+              <th>Serial number</th>
+              <td>{{ vehicule.serialNumber }}</td>
+          </tr>
+          <tr>
+              <th>Type</th>
+              <td>{{ vehicule.type.name|capitalize }}</td>
+          </tr>
+          <tr>
+              <th>Ville</th>
+              <td>{{ vehicule.ville.name|capitalize }}</td>
+          </tr>
+          <tr class="d-none">
+              <th>Latitude</th>
+              <td id="lat" data="{{ vehicule.lat }}">{{ vehicule.lat }}</td>
+          </tr>
+          <tr class="d-none">
+              <th>Longitude</th>
+              <td id="lon" data="{{ vehicule.lon }}">{{ vehicule.lon }}</td>
+          </tr>
+      </table>
+    </div>
+    <div class="col-4 p-0">
+      <div id="map" style="height: 100%;"></div>
+    </div>
+  </div>
+
+  <!-- <script type="text/javascript">
+    $('#location_add_vehicule').on('change', function() {
+      $('#location_add_contrat').empty()
+      $.ajax({
+          url: '/contrat/vehicule/' + this.value,
+          data: {
+                typeVehicule: $("#location_add_vehicule").val()
+            },
+            dataType: 'json',
+          type: 'post',
+          success: function(data){
+                $.each(data, function (key, value) {
+                    $("#location_add_contrat").append('<option value="' + Object.keys(value)[0] + '">' + Object.values(value)[0] + '</option>')
+                })
+          },
+          error: function(){
+          console.log('Erreur AJAX #location_add_vehicule')             
+          }
+      })
+    })
+  </script> -->
+</div>
+
+{% endblock %}

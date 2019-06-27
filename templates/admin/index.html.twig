@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Admin index{% endblock %}
+
+{% block body %}
+	<h1 class="mb-5">Admin index</h1>
+
+<div class="container">
+    <table id="datatable" class="table table-striped table-hover table-responsive cell-border">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Email</th>
+                <!-- <th>Password</th> -->
+                <th>Lastname</th>
+                <th>Firstname</th>
+                <th>Birthday</th>
+                <th>Address</th>
+                <th>Drivers_licence</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for admin in admins %}
+            <tr>
+                <td>{{ admin.id }}</td>
+                <td>{{ admin.email }}</td>
+                <!-- <td>{{ admin.password }}</td> -->
+                <td>{{ admin.lastname }}</td>
+                <td>{{ admin.firstname }}</td>
+                <td>{{ admin.birthday ? admin.birthday|date('Y-m-d') : '' }}</td>
+                <td>{{ admin.address }}</td>
+                <td>{{ admin.driversLicence }}</td>
+                <td>
+                    <a href="{{ path('admin_show', {'id': admin.id}) }}">Show</a>
+                    <a> | </a>
+                    <a href="{{ path('admin_edit', {'id': admin.id}) }}">Edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="10">No records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('admin_new') }}">Create new</a>
+</div>
+{% endblock %}

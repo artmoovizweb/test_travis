@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Contact | Lib2Move {% endblock %}
+
+{% block body %}
+<div class="background-contact">
+        <img src="https://thumbs.werkaandemuur.nl/1/a5cf99b3f2b6c29fe8d290d1dcb20e08/817x600/thumbnail/fit.jpg" class="d-block w-100" alt="...">
+            
+        <div class="contact-particulier">   
+            <div class="container">      
+                <h1 class="">POUR PLUS D'INFORMATIONS</h1> <br />
+                <h2 class="texto">Nous vous invitons à nous contacter....</h2>
+
+                    {{ form_start(form) }}  
+                        <div class="form-row">
+                            <div class="col">
+                                {{ form_row(form.firstname) }}  
+                            </div>
+                            <div class="col">
+
+                                {{ form_row(form.lastname) }}
+                            </div>
+                        </div>
+                        <div class="form-row"> 
+                            <div class="col">
+                                {{ form_row(form.email) }}  
+                            </div>       
+                            <div class="col">
+                                {{ form_row(form.phone) }}  
+                            </div>
+                        </div>    
+                        <div class="form-group">            
+                            <div class="">   
+                                {{ form_row(form.message) }}
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div id="conect" class="col">
+                                <button class="btn btn-primary">Envoyer</button>
+                            </div>
+                        </div>
+                    {{ form_end(form) }}  
+            </div>
+        </div>
+</div>
+                
+    </div>
+    
+{% endblock %}

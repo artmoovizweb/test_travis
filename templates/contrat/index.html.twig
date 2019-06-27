@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Contrat index{% endblock %}
+
+{% block body %}
+    <h1 class="mb-5">Contrat index</h1>
+    <div class="container">
+    <table id="datatable" class="table table-striped table-hover table-responsive cell-border">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Max_km</th>
+                <th>Max_time</th>
+                <th>Price</th>
+                <th>Km_penalty</th>
+                <th>Time_penalty</th>
+                <th>Type véhicule</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for contrat in contrats %}
+            <tr>
+                <td>{{ contrat.id }}</td>
+                <td>{{ contrat.name }}</td>
+                <td>{{ contrat.maxKm }}</td>
+                <td>{{ contrat.maxTime ? contrat.maxTime|date('H:i:s') : '' }}</td>
+                <td>{{ contrat.price }}</td>
+                <td>{{ contrat.kmPenalty }}</td>
+                <td>{{ contrat.timePenalty }}</td>
+                <td>{{ contrat.type.name }}</td>
+                <td>
+                    <a href="{{ path('contrat_show', {'id': contrat.id}) }}">Show</a>
+                    <a> | </a>
+                    <a href="{{ path('contrat_edit', {'id': contrat.id}) }}">Edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="8">No records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('contrat_new') }}">Create new</a>
+</div>
+{% endblock %}
