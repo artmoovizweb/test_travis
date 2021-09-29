@@ -16,7 +16,7 @@
   "dependencies": {
     "@google/maps": "^0.5.5",
     "bootstrap": "^4.3.1",
-    "datatables.net": "^1.10.19",
+    "datatables.net": "^1.11.3",
     "datatables.net-dt": "^1.10.19",
     "dotenv": "^7.0.0",
     "fontawesome": "^5.6.3",
